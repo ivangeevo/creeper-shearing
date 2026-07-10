@@ -1,6 +1,6 @@
-package org.btwr.decaying_spawners.platform;
+package org.btwr.creeper_shearing.platform;
 
-import org.btwr.decaying_spawners.platform.services.IPlatformHelper;
+import org.btwr.creeper_shearing.platform.services.IPlatformHelper;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLLoader;
 

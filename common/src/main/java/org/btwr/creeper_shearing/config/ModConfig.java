@@ -1,7 +1,7 @@
-package org.btwr.decaying_spawners.config;
+package org.btwr.creeper_shearing.config;
 
 import com.google.gson.*;
-import org.btwr.decaying_spawners.Constants;
+import org.btwr.creeper_shearing.Constants;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -26,7 +26,7 @@ public class ModConfig {
     private static Path configPath;
 
     public static void init(Path configDir) {
-        configPath = configDir.resolve("btwr/decaying_spawners/decaying_spawners.json");
+        configPath = configDir.resolve("btwr/creeper_shearing/creeper_shearing.json");
         load();
     }
 
@@ -46,7 +46,7 @@ public class ModConfig {
                 json.get("excludedSpawners").getAsJsonArray().forEach(e -> excludedSpawners.add(e.getAsString()));
             }
         } catch (IOException e) {
-            Constants.LOG.warn(Constants.MOD_NAME + "Failed to load config: {}", e.getMessage());
+            //Constants.LOG.warn(Constants.MOD_NAME + "Failed to load config: {}", e.getMessage());
         }
 
         Constants.LOG.info("Loaded maxMobSpawnCount={}", maxMobSpawnCount);

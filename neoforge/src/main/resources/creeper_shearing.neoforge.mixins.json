@@ -1,7 +1,7 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "org.btwr.decaying_spawners.mixin",
+  "package": "org.btwr.creeper_shearing.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [],
   "client": [],

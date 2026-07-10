@@ -8,14 +8,15 @@
         "${mod_author}"
     ],
     "contact": {
-        "homepage": "https://modrinth.com/mod/decaying-spawners",
-        "sources": "https://github.com/ivangeevo/decaying-spawners"
+        "homepage": "https://modrinth.com/mod/creeper-shearing",
+        "sources": "https://github.com/ivangeevo/creeper-shearing"
     },
     "license": "${license}",
     "icon": "${mod_id}.png",
     "environment": "*",
     "entrypoints": {
-        "main": ["org.btwr.decaying_spawners.DecayingSpawnersMod"]
+        "main": ["org.btwr.creeper_shearing.CreeperShearingMod"],
+        "fabric-datagen": ["org.btwr.creeper_shearing.datagen.ModDataGenerator"]
     },
     "mixins": [
         "${mod_id}.mixins.json",

@@ -1,4 +1,4 @@
-package org.btwr.decaying_spawners.platform.services;
+package org.btwr.creeper_shearing.platform.services;
 
 public interface IPlatformHelper {
 
