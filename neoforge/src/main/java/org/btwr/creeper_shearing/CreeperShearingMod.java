@@ -61,7 +61,6 @@ public class CreeperShearingMod {
     // Create an event for interacting with creepers so they can be sheared
     @SubscribeEvent
     public void onEntityInteract(PlayerInteractEvent.EntityInteract event) {
-        Constants.LOG.info("Interacted with {}", event.getTarget());
         var result = CreeperShearLogic.tryShear(
                 event.getEntity(),
                 event.getLevel(),

@@ -2,6 +2,8 @@ package org.btwr.creeper_shearing;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
+import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.world.item.CreativeModeTabs;
 import org.btwr.creeper_shearing.data.DataAttachmentsFabric;
 import org.btwr.creeper_shearing.item.ModItems;
 import org.btwr.creeper_shearing.util.CreeperShearLogic;
@@ -13,6 +15,7 @@ public class CreeperShearingMod implements ModInitializer {
         CommonClass.init();
 
         ModItems.initialize();
+        this.registerItemGroups();
         DataAttachmentsFabric.initialize();
         UseEntityCallback.EVENT.register(CreeperShearLogic::tryShear);
 
@@ -24,4 +27,11 @@ public class CreeperShearingMod implements ModInitializer {
         ServerLifecycleEvents.SERVER_STARTING.register(server -> ModConfig.load());
          **/
     }
+
+    private void registerItemGroups() {
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FOOD_AND_DRINKS).register(entries -> {
+            entries.accept(ModItems.CREEPER_OYSTERS);
+        });
+    }
+
 }
