@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "creeper_shearing:block/creeper_oyster_slab"
+    },
+    "type=double": {
+      "model": "creeper_shearing:block/creeper_oyster_block"
+    },
+    "type=top": {
+      "model": "creeper_shearing:block/creeper_oyster_slab_top"
+    }
+  }
+}

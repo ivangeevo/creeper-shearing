@@ -9,5 +9,4 @@ fabric/build
 fabric/runs
 neoforge/build
 neoforge/run
-src/main/generated/resources/.cache
-src/
+common/src/generated/resources/.cache

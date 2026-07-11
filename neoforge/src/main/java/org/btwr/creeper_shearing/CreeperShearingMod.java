@@ -13,6 +13,7 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.registries.RegisterEvent;
+import org.btwr.creeper_shearing.block.ModBlocks;
 import org.btwr.creeper_shearing.client.CreeperShearingModClient;
 import org.btwr.creeper_shearing.data.DataAttachmentsNeoForge;
 import org.btwr.creeper_shearing.item.ModItems;
@@ -43,6 +44,9 @@ public class CreeperShearingMod {
     }
 
     private void onRegister(RegisterEvent event) {
+        if (event.getRegistryKey() == Registries.BLOCK) {
+            ModBlocks.initialize();
+        }
         if (event.getRegistryKey() == Registries.ITEM) {
             ModItems.initialize();
         }
