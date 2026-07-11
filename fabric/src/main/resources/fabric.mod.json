@@ -16,6 +16,7 @@
     "environment": "*",
     "entrypoints": {
         "main": ["org.btwr.creeper_shearing.CreeperShearingMod"],
+        "client": ["org.btwr.creeper_shearing.client.CreeperShearingModClient"],
         "fabric-datagen": ["org.btwr.creeper_shearing.datagen.ModDataGenerator"]
     },
     "mixins": [

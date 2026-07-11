@@ -52,10 +52,6 @@ public class CreeperShearingMod {
         if (event.getTabKey() == FOOD_AND_DRINKS) {
             event.accept(ModItems.CREEPER_OYSTERS);
         }
-
-        if (event.getTabKey() == INGREDIENTS) {
-            event.accept(ModItems.CREEPER_OYSTERS);
-        }
     }
 
     // Create an event for interacting with creepers so they can be sheared

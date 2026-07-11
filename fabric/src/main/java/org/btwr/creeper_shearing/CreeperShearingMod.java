@@ -18,14 +18,6 @@ public class CreeperShearingMod implements ModInitializer {
         this.registerItemGroups();
         DataAttachmentsFabric.initialize();
         UseEntityCallback.EVENT.register(CreeperShearLogic::tryShear);
-
-        // Config
-        /**
-        ModConfig.init(FabricLoader.getInstance().getConfigDir());
-
-        // Reload config every time a world is loaded
-        ServerLifecycleEvents.SERVER_STARTING.register(server -> ModConfig.load());
-         **/
     }
 
     private void registerItemGroups() {
