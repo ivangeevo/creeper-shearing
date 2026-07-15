@@ -3,6 +3,8 @@ package org.btwr.creeper_shearing;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.EntityHitResult;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
@@ -58,7 +60,11 @@ public class CreeperShearingMod {
 
         if (event.getTabKey() == BUILDING_BLOCKS) {
             event.accept(ModBlocks.CREEPER_OYSTER_BLOCK);
-            event.accept(ModBlocks.CREEPER_OYSTER_SLAB);
+            event.insertAfter(
+                    new ItemStack(ModBlocks.CREEPER_OYSTER_BLOCK),
+                    new ItemStack(ModBlocks.CREEPER_OYSTER_SLAB),
+                    CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS
+            );
         }
     }
 
