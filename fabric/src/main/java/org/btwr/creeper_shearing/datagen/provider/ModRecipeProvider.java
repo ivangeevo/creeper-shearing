@@ -27,7 +27,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 .unlockedBy(getHasName(ModItems.CREEPER_OYSTERS), has(ModItems.CREEPER_OYSTERS))
                 .save(recipeOutput);
 
-        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.CREEPER_OYSTER_SLAB)
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModBlocks.CREEPER_OYSTER_SLAB, 6)
                 .define('#', ModBlocks.CREEPER_OYSTER_BLOCK)
                 .pattern("###")
                 .unlockedBy(getHasName(ModBlocks.CREEPER_OYSTER_BLOCK), has(ModBlocks.CREEPER_OYSTER_BLOCK))

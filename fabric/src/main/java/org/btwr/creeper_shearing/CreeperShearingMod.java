@@ -26,6 +26,11 @@ public class CreeperShearingMod implements ModInitializer {
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.FOOD_AND_DRINKS).register(entries -> {
             entries.accept(ModItems.CREEPER_OYSTERS);
         });
+
+        ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.BUILDING_BLOCKS).register(entries -> {
+            entries.accept(ModBlocks.CREEPER_OYSTER_BLOCK);
+            entries.addAfter(ModBlocks.CREEPER_OYSTER_BLOCK, ModBlocks.CREEPER_OYSTER_SLAB);
+        });
     }
 
 }

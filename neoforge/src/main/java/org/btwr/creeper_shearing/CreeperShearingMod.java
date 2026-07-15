@@ -20,8 +20,7 @@ import org.btwr.creeper_shearing.item.ModItems;
 import org.btwr.creeper_shearing.platform.NeoForgeSoundRegistration;
 import org.btwr.creeper_shearing.util.CreeperShearLogic;
 
-import static net.minecraft.world.item.CreativeModeTabs.FOOD_AND_DRINKS;
-import static net.minecraft.world.item.CreativeModeTabs.INGREDIENTS;
+import static net.minecraft.world.item.CreativeModeTabs.*;
 
 
 @Mod(Constants.MOD_ID)
@@ -55,6 +54,11 @@ public class CreeperShearingMod {
     private void registerCreativeTabEntries(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == FOOD_AND_DRINKS) {
             event.accept(ModItems.CREEPER_OYSTERS);
+        }
+
+        if (event.getTabKey() == BUILDING_BLOCKS) {
+            event.accept(ModBlocks.CREEPER_OYSTER_BLOCK);
+            event.accept(ModBlocks.CREEPER_OYSTER_SLAB);
         }
     }
 
