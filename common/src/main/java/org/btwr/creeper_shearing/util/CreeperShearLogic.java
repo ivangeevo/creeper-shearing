@@ -8,13 +8,15 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShearsItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
-import org.btwr.creeper_shearing.data.CreeperData;
+import org.btwr.creeper_shearing.api.NeuteredDropsRegistry;
+import org.btwr.creeper_shearing.data.CreeperDataKeys;
+import org.btwr.creeper_shearing.data.CreeperNeuterData;
 import org.btwr.creeper_shearing.data.CreeperDataAttachment;
 import org.btwr.creeper_shearing.item.ModItems;
 import org.btwr.creeper_shearing.sound.ModSoundEvents;
@@ -25,15 +27,15 @@ public class CreeperShearLogic {
     public static InteractionResult tryShear(
             Player player, Level level, InteractionHand hand, Entity entity, EntityHitResult hitResult)
     {
-        if (entity instanceof Creeper creeper) {
-            CreeperData creeperData = CreeperDataAttachment.getOrCreate(creeper);
+        if (entity instanceof Monster creeper) {
+            CreeperNeuterData neuterData = CreeperDataAttachment.getOrCreate(creeper, CreeperDataKeys.NEUTER_DATA);
 
-            if (creeperData == null) return InteractionResult.PASS;
+            if (neuterData == null) return InteractionResult.PASS;
 
-            if (creeperData.canNeuter() && entity.getType().is(ModTags.EntityTypes.NEUTERABLE_CREEPERS)) {
+            if (neuterData.canNeuter() && entity.getType().is(ModTags.EntityTypes.NEUTERABLE_CREEPERS)) {
                 ItemStack handStack = player.getItemInHand(hand);
 
-                if (handStack.getItem() instanceof ShearsItem && !creeperData.isNeutered()) {
+                if (handStack.getItem() instanceof ShearsItem && !neuterData.isNeutered()) {
                     float pitch2 = (player.level().random.nextFloat() - player.level().random.nextFloat()) * 0.1F + 0.7F;
                     player.level().playSound(null, player.blockPosition(), ModSoundEvents.CREEPER_SHEARED(),
                             SoundSource.NEUTRAL, 1.0F, 1.0F
@@ -43,8 +45,8 @@ public class CreeperShearLogic {
                     );
 
                     if(!creeper.level().isClientSide) {
-                        creeperData.setNeutered(true);
-                        creeperData.markDirty();
+                        neuterData.setNeutered(true);
+                        neuterData.markDirty();
 
                         ParticleOptions particle = ParticleTypes.ITEM_SNOWBALL;
                         for (int i = 0; i < 50; i++) {
@@ -60,7 +62,9 @@ public class CreeperShearLogic {
                         }
 
                         handStack.hurtAndBreak(10, player, LivingEntity.getSlotForHand(hand));
-                        creeper.spawnAtLocation(new ItemStack(ModItems.CREEPER_OYSTERS));
+                        ItemStack dropStack = NeuteredDropsRegistry.NEUTERED_DROPS.get(creeper.getType());
+
+                        creeper.spawnAtLocation(dropStack);
 
                         return InteractionResult.SUCCESS;
                     }

@@ -2,6 +2,15 @@ plugins {
     id 'multiloader-loader'
     id 'fabric-loom'
 }
+
+repositories {
+    maven { url "https://api.modrinth.com/maven" }
+    maven {
+        name = 'GeckoLib'
+        url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+    }
+}
+
 dependencies {
     minecraft "com.mojang:minecraft:${minecraft_version}"
     mappings loom.layered {
@@ -10,6 +19,12 @@ dependencies {
     }
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+
+    //modCompileOnly "maven.modrinth:creeper-overhaul:${project.creeper_overhaul_version_fabric}"
+    //modLocalRuntime "maven.modrinth:creeper-overhaul:${project.creeper_overhaul_version_fabric}"
+
+   //modImplementation "software.bernie.geckolib:geckolib-fabric-1.21.1:${geckolib_version_fabric}"
+
 }
 
 loom {

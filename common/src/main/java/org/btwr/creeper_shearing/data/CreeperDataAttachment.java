@@ -1,6 +1,8 @@
 package org.btwr.creeper_shearing.data;
 
-import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.monster.Monster;
+import org.btwr.creeper_shearing.data.impl.CreeperDataProvider;
+import org.btwr.creeper_shearing.data.impl.DataKey;
 
 import java.util.ServiceLoader;
 
@@ -10,16 +12,16 @@ public final class CreeperDataAttachment {
             .findFirst()
             .orElseThrow(() -> new IllegalStateException("No CreeperDataProvider registered for this platform"));
 
-    public static CreeperData get(Creeper creeper) {
-        return PROVIDER.get(creeper);
+    public static <T> T get(Monster creeper, DataKey<T> key) {
+        return PROVIDER.get(creeper, key);
     }
 
-    public static CreeperData getOrCreate(Creeper creeper) {
-        return PROVIDER.getOrCreate(creeper);
+    public static <T> T getOrCreate(Monster creeper, DataKey<T> key) {
+        return PROVIDER.getOrCreate(creeper, key);
     }
 
-    public static void set(Creeper creeper, CreeperData data) {
-        PROVIDER.set(creeper, data);
+    public static <T> void set(Monster creeper, DataKey<T> key, T data) {
+        PROVIDER.set(creeper, key, data);
     }
 
     private CreeperDataAttachment() {}

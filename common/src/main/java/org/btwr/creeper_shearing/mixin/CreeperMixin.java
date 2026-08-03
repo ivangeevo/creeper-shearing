@@ -8,12 +8,13 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
-import org.btwr.creeper_shearing.data.CreeperData;
-import org.btwr.creeper_shearing.data.CreeperDataAttachment;
+import org.btwr.creeper_shearing.api.NeuteredDropsRegistry;
+import org.btwr.creeper_shearing.data.*;
 import org.btwr.creeper_shearing.entity.ai.goal.CreeperSwellBehavior;
+import org.btwr.creeper_shearing.item.ModItems;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -26,9 +27,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Creeper.class)
 public abstract class CreeperMixin extends Monster {
 
-    @Shadow private int maxSwell;
     @Shadow private int oldSwell;
     @Shadow private int swell;
+    @Shadow private int maxSwell;
+
     @Shadow public abstract boolean isIgnited();
     @Shadow public abstract void setSwellDir(int fuseSpeed);
     @Shadow public abstract int getSwellDir();
@@ -40,7 +42,11 @@ public abstract class CreeperMixin extends Monster {
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void onInit(EntityType<?> entityType, Level level, CallbackInfo ci) {
-        CreeperDataAttachment.getOrCreate((Creeper)(Object)this);
+        Creeper self = (Creeper)(Object)this;
+
+        CreeperDataAttachment.getOrCreate(self, CreeperDataKeys.NEUTER_DATA);
+        CreeperDataAttachment.getOrCreate(self, CreeperDataKeys.EXPLODE_DATA);
+        CreeperDataAttachment.getOrCreate(self, CreeperDataKeys.SUBTYPE_DATA);
     }
 
     @ModifyArg(method = "registerGoals", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/goal/GoalSelector;addGoal(ILnet/minecraft/world/entity/ai/goal/Goal;)V", ordinal = 1), index = 1)
@@ -58,8 +64,10 @@ public abstract class CreeperMixin extends Monster {
     // Add a drop on death with a chance, instead of modifying the loot table.
     @Inject(method = "dropCustomDeathLoot", at = @At("TAIL"))
     private void onDropEquipment(ServerLevel level, DamageSource damageSource, boolean recentlyHit, CallbackInfo ci) {
+        ItemStack dropStack = NeuteredDropsRegistry.NEUTERED_DROPS.get(this.getType());
+
         if (!creeper_shearing$isNeutered() && random.nextInt(3) == 0) {
-            this.spawnAtLocation(Items.EMERALD, 1);
+            this.spawnAtLocation(dropStack, 1);
         }
     }
 
@@ -79,13 +87,17 @@ public abstract class CreeperMixin extends Monster {
 
     @Unique
     private void creeper_shearing$setCustomTickLogic() {
+        Creeper self = (Creeper)(Object)this;
+        CreeperNeuterData neuterData = (CreeperNeuterData) CreeperDataAttachment.getOrCreate(self, CreeperDataKeys.NEUTER_DATA);
+        CreeperExplodeData explodeData = (CreeperExplodeData) CreeperDataAttachment.getOrCreate(self, CreeperDataKeys.EXPLODE_DATA);
+
         if (this.isAlive()) {
             this.oldSwell = this.swell;
             if (this.isIgnited()) {
                 this.setSwellDir(1);
             }
 
-            if (this.getSwellDir() > 0 && this.swell == 0 && !creeper_shearing$isNeutered()) {
+            if (this.getSwellDir() > 0 && this.swell == 0 && !neuterData.isNeutered()) {
                 this.playSound(SoundEvents.CREEPER_PRIMED, 1.0f, 0.5f);
                 this.gameEvent(GameEvent.PRIME_FUSE);
             }
@@ -97,7 +109,7 @@ public abstract class CreeperMixin extends Monster {
             }
 
             // Check if the creeper is not neutered
-            if (!creeper_shearing$isNeutered()) {
+            if (!neuterData.isNeutered()) {
                 if (this.swell >= this.maxSwell) {
                     this.swell = this.maxSwell;
                     this.explodeCreeper();
@@ -108,14 +120,13 @@ public abstract class CreeperMixin extends Monster {
             }
         }
 
-        Creeper self = (Creeper)(Object)this;
-        CreeperData creeperData = CreeperDataAttachment.getOrCreate(self);
-
         if (!self.level().isClientSide) {
-            creeperData.tick(self);
+            neuterData.tick(self);
+            explodeData.tick(self);
 
-            if (creeperData.isDirty()) {
-                CreeperDataAttachment.set(self, creeperData);
+            if (neuterData.isDirty()) {
+                CreeperDataAttachment.set(self, CreeperDataKeys.NEUTER_DATA, neuterData);
+                CreeperDataAttachment.set(self, CreeperDataKeys.EXPLODE_DATA, explodeData);
             }
         }
 
@@ -124,8 +135,8 @@ public abstract class CreeperMixin extends Monster {
 
     @Unique
     private boolean creeper_shearing$isNeutered() {
-        var data = CreeperDataAttachment.get((Creeper)(Object)this);
-        return data != null && data.isNeutered();
+        CreeperNeuterData neuterData = (CreeperNeuterData) CreeperDataAttachment.get((Creeper)(Object)this, CreeperDataKeys.NEUTER_DATA);
+        return neuterData != null && neuterData.isNeutered();
     }
 
 }

@@ -3,6 +3,7 @@ package org.btwr.creeper_shearing;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.EntityHitResult;
@@ -15,6 +16,7 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.registries.RegisterEvent;
+import org.btwr.creeper_shearing.api.NeuteredDropsRegistry;
 import org.btwr.creeper_shearing.block.ModBlocks;
 import org.btwr.creeper_shearing.client.CreeperShearingModClient;
 import org.btwr.creeper_shearing.data.DataAttachmentsNeoForge;
@@ -39,9 +41,11 @@ public class CreeperShearingMod {
         eventBus.addListener(this::onRegister);
         eventBus.addListener(this::registerCreativeTabEntries);
 
+
         if (FMLEnvironment.dist == Dist.CLIENT) {
             CreeperShearingModClient.init(eventBus);
         }
+
     }
 
     private void onRegister(RegisterEvent event) {
@@ -50,6 +54,9 @@ public class CreeperShearingMod {
         }
         if (event.getRegistryKey() == Registries.ITEM) {
             ModItems.initialize();
+
+            // Register creeper oyster drops
+            NeuteredDropsRegistry.registerDrop(EntityType.CREEPER, new ItemStack(ModItems.CREEPER_OYSTERS, 1));
         }
     }
 

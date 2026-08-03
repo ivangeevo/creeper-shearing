@@ -17,5 +17,4 @@ public class UpdateRequiringData<T extends Entity> implements EntityAttachmentBa
             return true;
         }
     }
-
 }

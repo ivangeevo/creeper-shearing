@@ -3,8 +3,7 @@ package org.btwr.creeper_shearing.entity.ai.goal;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.SwellGoal;
 import net.minecraft.world.entity.monster.Creeper;
-import org.btwr.creeper_shearing.data.CreeperData;
-import org.btwr.creeper_shearing.data.CreeperDataAttachment;
+import org.btwr.creeper_shearing.data.*;
 import org.jetbrains.annotations.Nullable;
 
 public class CreeperSwellBehavior extends SwellGoal {
@@ -20,9 +19,12 @@ public class CreeperSwellBehavior extends SwellGoal {
 
     @Override
     public boolean canUse() {
-        if (!myCreeper.isIgnited() && (this.getCreeperData() != null && this.getCreeperData().isNeutered())) {
+        CreeperNeuterData neuterData = (CreeperNeuterData) CreeperDataAttachment.getOrCreate(myCreeper, CreeperDataKeys.NEUTER_DATA);
+        CreeperExplodeData explodeData = (CreeperExplodeData) CreeperDataAttachment.getOrCreate(myCreeper, CreeperDataKeys.EXPLODE_DATA);
+
+        if (!myCreeper.isIgnited() && (neuterData != null && neuterData.isNeutered())) {
             return false;
-        } else if (this.getCreeperData() != null && this.getCreeperData().getIsDeterminedToExplode()) {
+        } else if (explodeData != null && explodeData.getIsDeterminedToExplode()) {
             return true;
         }
 
@@ -42,7 +44,9 @@ public class CreeperSwellBehavior extends SwellGoal {
 
     @Override
     public void tick() {
-        if (this.target == null || (this.getCreeperData() != null && this.getCreeperData().isNeutered())) {
+        CreeperNeuterData neuterData = (CreeperNeuterData) CreeperDataAttachment.getOrCreate(myCreeper, CreeperDataKeys.NEUTER_DATA);
+
+        if (this.target == null || (neuterData != null && neuterData.isNeutered())) {
             this.myCreeper.setSwellDir(-1);
             return;
         }
@@ -55,10 +59,6 @@ public class CreeperSwellBehavior extends SwellGoal {
             return;
         }
         this.myCreeper.setSwellDir(1);
-    }
-
-    private CreeperData getCreeperData() {
-        return CreeperDataAttachment.get(myCreeper);
     }
 
 }

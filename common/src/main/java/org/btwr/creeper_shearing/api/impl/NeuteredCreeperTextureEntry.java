@@ -5,7 +5,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.resources.ResourceLocation;
 
 public record NeuteredCreeperTextureEntry(ResourceLocation entity, ResourceLocation texture) {
-
     public static final Codec<NeuteredCreeperTextureEntry> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
                     ResourceLocation.CODEC.fieldOf("entity").forGetter(NeuteredCreeperTextureEntry::entity),

@@ -3,7 +3,10 @@ package org.btwr.creeper_shearing;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.player.UseEntityCallback;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.ItemStack;
+import org.btwr.creeper_shearing.api.NeuteredDropsRegistry;
 import org.btwr.creeper_shearing.block.ModBlocks;
 import org.btwr.creeper_shearing.data.DataAttachmentsFabric;
 import org.btwr.creeper_shearing.item.ModItems;
@@ -20,6 +23,9 @@ public class CreeperShearingMod implements ModInitializer {
         this.registerItemGroups();
         DataAttachmentsFabric.initialize();
         UseEntityCallback.EVENT.register(CreeperShearLogic::tryShear);
+
+        // Register creeper oyster drops
+        NeuteredDropsRegistry.registerDrop(EntityType.CREEPER, new ItemStack(ModItems.CREEPER_OYSTERS, 1));
     }
 
     private void registerItemGroups() {

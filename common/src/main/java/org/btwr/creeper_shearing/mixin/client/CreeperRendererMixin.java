@@ -9,6 +9,8 @@ import net.minecraft.world.entity.monster.Creeper;
 import org.btwr.creeper_shearing.Constants;
 import org.btwr.creeper_shearing.api.NeuteredCreeperTextures;
 import org.btwr.creeper_shearing.data.CreeperDataAttachment;
+import org.btwr.creeper_shearing.data.CreeperDataKeys;
+import org.btwr.creeper_shearing.data.CreeperNeuterData;
 import org.btwr.creeper_shearing.tag.ModTags;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -28,16 +30,16 @@ public abstract class CreeperRendererMixin extends MobRenderer<Creeper, CreeperM
         super(context, entityModel, f);
     }
 
-    @Inject(method = "getTextureLocation(Lnet/minecraft/world/entity/monster/Creeper;)Lnet/minecraft/resources/ResourceLocation;",
-            at = @At("HEAD"), cancellable = true)
+    //@Inject(method = "getTextureLocation(Lnet/minecraft/world/entity/monster/Creeper;)Lnet/minecraft/resources/ResourceLocation;", at = @At("HEAD"), cancellable = true)
     private void injectedGetTexture(Creeper entity, CallbackInfoReturnable<ResourceLocation> cir) {
-        var data = CreeperDataAttachment.get(entity);
-
-        if (data == null || !data.isNeutered()) return;
-
         // Only do this if the type belongs to the tag
         var type = entity.getType();
+
         if (!type.is(ModTags.EntityTypes.NEUTERABLE_CREEPERS)) return;
+
+        CreeperNeuterData neuterData = CreeperDataAttachment.get(entity, CreeperDataKeys.NEUTER_DATA);
+
+        if (neuterData == null || !neuterData.isNeutered()) return;
 
         // External override?
         var override = NeuteredCreeperTextures.get(type);

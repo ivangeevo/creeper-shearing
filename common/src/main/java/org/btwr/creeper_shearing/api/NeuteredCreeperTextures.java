@@ -4,7 +4,6 @@ package org.btwr.creeper_shearing.api;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
-import org.btwr.creeper_shearing.Constants;
 import org.btwr.creeper_shearing.api.impl.NeuteredCreeperTextureEntry;
 
 import java.util.HashMap;
@@ -34,7 +33,7 @@ public final class NeuteredCreeperTextures {
      * The provided texture will override the default neutered creeper texture
      * whenever a matching entity is rendered.
      *
-     * @param type     the creeper-like entity type
+     * @param entity     the creeper entity id
      * @param texture  the texture identifier to use when neutered
      */
     public static void register(ResourceLocation entity, ResourceLocation texture) {
@@ -54,6 +53,8 @@ public final class NeuteredCreeperTextures {
     public static ResourceLocation get(EntityType<?> type) {
         ResourceLocation id = BuiltInRegistries.ENTITY_TYPE.getKey(type);
 
+
+        //
         // API override wins
         ResourceLocation override = API_OVERRIDES.get(id);
         if (override != null) {
