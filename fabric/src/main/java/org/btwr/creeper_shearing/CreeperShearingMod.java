@@ -24,8 +24,6 @@ public class CreeperShearingMod implements ModInitializer {
         DataAttachmentsFabric.initialize();
         UseEntityCallback.EVENT.register(CreeperShearLogic::tryShear);
 
-        // Register creeper oyster drops
-        NeuteredDropsRegistry.registerDrop(EntityType.CREEPER, new ItemStack(ModItems.CREEPER_OYSTERS, 1));
     }
 
     private void registerItemGroups() {

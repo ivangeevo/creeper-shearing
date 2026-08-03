@@ -18,7 +18,6 @@ import org.btwr.creeper_shearing.api.NeuteredDropsRegistry;
 import org.btwr.creeper_shearing.data.CreeperDataKeys;
 import org.btwr.creeper_shearing.data.CreeperNeuterData;
 import org.btwr.creeper_shearing.data.CreeperDataAttachment;
-import org.btwr.creeper_shearing.item.ModItems;
 import org.btwr.creeper_shearing.sound.ModSoundEvents;
 import org.btwr.creeper_shearing.tag.ModTags;
 
