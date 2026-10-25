@@ -81,13 +81,13 @@ public abstract class MobCreeperMixin extends MobMonster implements NeuterableCr
 			if (drop != null) {
 				this.dropItem(drop, 1.0F);
 			}
-		}
 
-		for (int i = 0; i < 50; i++) {
-			double particleX = this.x + this.random.nextDouble() - 0.5D;
-			double particleY = this.y + 0.8D + this.random.nextDouble() * 0.5D;
-			double particleZ = this.z + this.random.nextDouble() - 0.5D;
-			this.world.spawnParticle("item", particleX, particleY, particleZ, 0.0D, 0.0D, 0.0D, Items.AMMO_SNOWBALL.id, false);
+			for (int i = 0; i < 50; i++) {
+				double particleX = this.x + this.random.nextDouble() - 0.5D + this.random.nextGaussian() * (this.random.nextDouble() - 0.5D) * 0.5D;
+				double particleY = this.y + this.random.nextDouble() * 0.5D + this.random.nextGaussian() * this.random.nextDouble() * 0.25D;
+				double particleZ = this.z + this.random.nextDouble() - 0.5D + this.random.nextGaussian() * (this.random.nextDouble() - 0.5D) * 0.5D;
+				this.world.spawnParticle("item", particleX, particleY, particleZ, 0.0D, 0.0D, 0.0D, Items.AMMO_SNOWBALL.id, true);
+			}
 		}
 
 		stack.damageItem(10, player);
