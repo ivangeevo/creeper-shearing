@@ -1,12 +1,8 @@
 .gradle/
 .idea/
+.vscode/
+bin/
 build/
-buildSrc/.gradle
-buildSrc/build
-common/build
-fabric/.gradle
-fabric/build
-fabric/runs
-neoforge/build
-neoforge/run
-common/src/generated/resources/.cache
+out/
+run/
+run-server/

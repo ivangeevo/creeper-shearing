@@ -1,0 +1,14 @@
+{
+  "creeper.sheared": {
+    "subtitle": "subtitles.creeper_shearing.creeper.sheared",
+    "sounds": [
+      "creeper/sheared.ogg"
+    ]
+  },
+  "creeper.sheared_layer": {
+    "sounds": [
+      "creeper/sheared_layer1.ogg",
+      "creeper/sheared_layer2.ogg"
+    ]
+  }
+}

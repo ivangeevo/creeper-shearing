@@ -1,0 +1,11 @@
+{
+  "required": true,
+  "package": "org.btwr.creeper_shearing.mixin",
+  "compatibilityLevel": "JAVA_${java}",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "MobCreeperMixin"
+  ]
+}

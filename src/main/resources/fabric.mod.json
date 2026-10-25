@@ -1,0 +1,32 @@
+{
+	"schemaVersion": 1,
+	"id": "creeper_shearing",
+	"version": "${version}",
+	"name": "Creeper Shearing",
+	"description": "Allows neutralizing of creepers by shearing them!",
+	"authors": [
+		"ivangeevo"
+	],
+	"contact": {
+		"homepage": "https://modrinth.com/mod/creeper-shearing",
+		"sources": "https://github.com/ivangeevo/creeper-shearing"
+	},
+	"license": "CC-BY-4.0",
+	"environment": "*",
+	"entrypoints": {
+		"main": ["org.btwr.creeper_shearing.CreeperShearingMod"],
+		"client": ["org.btwr.creeper_shearing.CreeperShearingModClient"]
+	},
+	"mixins": [
+		"creeper_shearing.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=${fabricloader}",
+		"halplibe": ">=${halplibe}",
+		"minecraft": "*",
+		"java": ">=${java}"
+	},
+	"suggests": {
+		"modmenu": ">=${modmenu}"
+	}
+}

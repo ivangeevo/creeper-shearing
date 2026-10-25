@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab/upper",
+  "textures": {
+    "top": "creeper_shearing:block/creeper_oyster_block",
+    "bottom": "creeper_shearing:block/creeper_oyster_block",
+    "side": "creeper_shearing:block/creeper_oyster_block"
+  }
+}

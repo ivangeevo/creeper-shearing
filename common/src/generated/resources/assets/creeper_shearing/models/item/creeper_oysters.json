@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "creeper_shearing:item/creeper_oysters"
-  }
-}
