@@ -30,6 +30,10 @@ repositories {
     maven("https://maven.thesignalumproject.net/infrastructure") { name = "SignalumMavenInfrastructure" }
     maven("https://maven.thesignalumproject.net/releases") { name = "SignalumMavenReleases" }
 	maven("https://maven.thesignalumproject.net/nightly") { name = "SignalumMavenNightly" }
+	exclusiveContent {
+		forRepository { maven("https://api.modrinth.com/maven") { name = "Modrinth" } }
+		filter { includeGroup("maven.modrinth") }
+	}
 }
 dependencies {
     minecraft("::${libs.versions.bta.get()}")
@@ -37,6 +41,7 @@ dependencies {
 	// Required at compilation & runtime
 	// included in builds as a runtime dependency
 	implementation(libs.loader)
+	implementation(libs.uselessNumerical)
 	implementation(libs.halplibe) // If you do not need halplibe you can delete this line
 
 	// Only required at compilation
@@ -111,7 +116,8 @@ tasks {
 			"fabricloader" to libs.versions.loader.get(),
 			"halplibe" to libs.versions.halplibe.get(),
 			"java" to libs.versions.java.get(),
-			"modmenu" to libs.versions.modMenu.get()
+			"modmenu" to libs.versions.modMenu.get(),
+			"uselessnumerical" to libs.versions.uselessNumerical.get().substringBefore("-")
 		)
 		// This is needed for gradle to recognize changes
 		// made to expanded files

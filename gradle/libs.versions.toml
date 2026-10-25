@@ -19,6 +19,8 @@ btaChannel = "release"
 loader = "0.18.4-bta.11"
 # Check this on https://github.com/Turnip-Labs/ModMenu/releases/latest/
 modMenu = "5.0.2"
+# Check this on https://modrinth.com/mod/bta-uselessnumerical/versions
+uselessNumerical = "1.1.1-8.0"
 # Check this on https://github.com/Turnip-Labs/bta-halplibe/releases/latest/
 halplibe = "6.2.0+8.0.1"
 # Check this on https://github.com/Better-than-Adventure/legacy-lwjgl3/releases/latest/
@@ -38,6 +40,7 @@ jomlPrimitivess = "1.10.0"
 loader = { group = "net.fabricmc", name = "fabric-loader", version.ref = "loader" }
 halplibe = { group = "turniplabs", name = "halplibe", version.ref = "halplibe" }
 modMenu = { group = "turniplabs", name = "modmenu-bta", version.ref = "modMenu" }
+uselessNumerical = { group = "maven.modrinth", name = "bta-uselessnumerical", version.ref = "uselessNumerical" }
 legacyLwjgl = { group = "com.github.Better-than-Adventure", name = "legacy-lwjgl3", version.ref = "legacyLwjgl" }
 slf4jApi = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4jApi" }
 # https://piston-data.mojang.com/v1/objects/43db9b498cb67058d2e12d394e6507722e71bb45/client.jar
